@@ -1,6 +1,9 @@
 # Unnamed Game Website
 An as yet unnamed collaborative project.
 
+# Contributing
+As of right now, contributions aren't welcome.
+
 # Bootstrapping
 1. Run `yarn` to install node modules
 2. Create `.env` in the root project directory, with the correct configuration
