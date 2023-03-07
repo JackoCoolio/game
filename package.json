@@ -8,7 +8,7 @@
     "typecheck": "tsc",
     "prisma-gen": "prisma generate",
     "prisma-push": "prisma db push",
-    "prettier": "prettier -w app/ components/"
+    "prettier": "prettier -w app/"
   },
   "dependencies": {
     "@remix-run/node": "^1.14.0",
