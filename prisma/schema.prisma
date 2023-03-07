@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id       Int      @id @default(autoincrement())
+    /// The unique username of this user.
+    username String   @unique // if we wanted, we could use @db.VarChar(32)
+    /// When this user was created.
+    created  DateTime @db.Timestamp()
+    /// The auth record associated with this user.
+    auth     Auth?
+}
+
+model Auth {
+    id     Int   @id @default(autoincrement())
+    /// The 64B hashed password, using SHA-512 with a 16-byte salt.
+    hashed Bytes @db.Binary(64) // 64B
+    /// The salt used in hashing, 16B.
+    salt   Bytes @db.Binary(16) // 16B
+    /// The user that this auth record authenticates.
+    user   User  @relation(fields: [userId], references: [id])
+    /// The id of the user.
+    userId Int   @unique @map("user_id")
+}
