@@ -1,4 +1,4 @@
-import { Counter } from "components/Counter";
+import { Counter } from "components/Counter"
 
 export default function Index() {
   return (
@@ -7,5 +7,5 @@ export default function Index() {
       <p>There isn't much here yet...</p>
       <Counter />
     </div>
-  );
+  )
 }

@@ -7,7 +7,8 @@
     "start": "remix-serve build",
     "typecheck": "tsc",
     "prisma-gen": "prisma generate",
-    "prisma-push": "prisma db push"
+    "prisma-push": "prisma db push",
+    "prettier": "prettier -w app/ components/"
   },
   "dependencies": {
     "@remix-run/node": "^1.14.0",
@@ -24,6 +25,7 @@
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "eslint": "^8.27.0",
+    "prettier": "^2.8.4",
     "prisma": "^4.11.0",
     "typescript": "^4.8.4"
   },
