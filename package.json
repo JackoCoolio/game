@@ -14,9 +14,12 @@
     "@remix-run/node": "^1.14.0",
     "@remix-run/react": "^1.14.0",
     "@remix-run/serve": "^1.14.0",
+    "@trpc/client": "^10.14.1",
+    "@trpc/server": "^10.14.1",
     "isbot": "^3.6.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@prisma/client": "^4.11.0",
