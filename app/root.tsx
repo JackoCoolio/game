@@ -17,7 +17,7 @@ export const meta: MetaFunction = () => ({
 })
 
 export const links = () => {
-    return [{ rel: "stylesheet", href: styles }]
+  return [{ rel: "stylesheet", href: styles }]
 }
 
 export default function App() {

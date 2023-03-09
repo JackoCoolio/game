@@ -18,15 +18,21 @@ export function generateSalt(): Buffer {
 export function hashPassword(password: string, salt: Buffer): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     // hash the password
-    pbkdf2(password, salt, HASH_ITERATIONS, HASH_KEY_LEN, HASH_DIGEST, (err, hashed) => {
-      // if there was an error, reject this promise
-      if (err) {
-        return reject(err)
-      }
+    pbkdf2(
+      password,
+      salt,
+      HASH_ITERATIONS,
+      HASH_KEY_LEN,
+      HASH_DIGEST,
+      (err, hashed) => {
+        // if there was an error, reject this promise
+        if (err) {
+          return reject(err)
+        }
 
-      // otherwise resolve with hashed password
-      resolve(hashed)
-    })
+        // otherwise resolve with hashed password
+        resolve(hashed)
+      },
+    )
   })
 }
-
