@@ -1,6 +1,8 @@
 import { createTRPCProxyClient, httpBatchLink, loggerLink } from "@trpc/client"
 import type { AppRouter } from "./router"
 
+// client side code for TRPC
+
 // create the client that the browser will use to call our procedures
 export const trpc = createTRPCProxyClient<AppRouter>({
   links: [

@@ -1,4 +1,4 @@
-import { requestHandler } from "~/lib/router"
+import { requestHandler } from "~/lib/trpc/router"
 
 /**
  * Remix makes a distinction between GET and non-GET requests, so we have two

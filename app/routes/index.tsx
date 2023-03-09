@@ -35,7 +35,7 @@ export default function Index() {
       <button
         onClick={async () => {
           // call the trpc endpoint
-          const id = await trpc.register.mutate({
+          const id = await trpc.user.register.mutate({
             username,
             password,
           })
