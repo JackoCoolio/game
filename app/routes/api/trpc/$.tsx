@@ -1,10 +1,14 @@
-import { LoaderArgs } from "@remix-run/node";
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
-import { appRouter } from "~/lib/router";
+import { requestHandler } from "~/lib/router";
 
-export const loader = ({ request }: LoaderArgs) => fetchRequestHandler({
-    endpoint: "/api/trpc",
-    req: request,
-    router: appRouter,
-    createContext: () => ({}),
-})
+/**
+ * Remix makes a distinction between GET and non-GET requests, so we have two
+ * functions here. `loader` and `action` are used by Remix; We don't import
+ * them anywhere.
+ */
+
+
+// handle GET requests
+export const loader = requestHandler
+
+// handle non-GET requests
+export const action = requestHandler
