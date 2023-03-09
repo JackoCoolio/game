@@ -15,7 +15,7 @@ model User {
     /// The unique username of this user.
     username String   @unique // if we wanted, we could use @db.VarChar(32)
     /// When this user was created.
-    created  DateTime @db.Timestamp()
+    created  DateTime @default(now()) @db.Timestamp()
     /// The auth record associated with this user.
     auth     Auth?
 }
