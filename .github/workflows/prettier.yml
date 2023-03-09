@@ -1,0 +1,27 @@
+name: Prettier
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  prettier:
+    name: Run prettier check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          persist-credentials: false
+      - name: Check prettier
+        uses: creyD/prettier_action@v4.3
+        with:
+          # don't write to any files
+          dry: True
+          # only check files that have been changed
+          only_changed: True
+          github_token: ${{ secrets.GITHUB_TOKEN }}
