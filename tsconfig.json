@@ -1,6 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig.json",
   "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
+    "module": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "isolatedModules": true,
     "esModuleInterop": true,
