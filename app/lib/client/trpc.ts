@@ -1,5 +1,5 @@
 import { createTRPCProxyClient, httpBatchLink, loggerLink } from "@trpc/client"
-import type { AppRouter } from "./router"
+import type { AppRouter } from "~/lib/server/router"
 
 // client side code for TRPC
 

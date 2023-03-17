@@ -1,5 +1,5 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch"
-import { createContext, router } from "../router"
+import { createContext, router } from "~/lib/server/trpc"
 import { userRouter } from "./user"
 
 // defines the procedures
@@ -15,7 +15,7 @@ export const requestHandler = ({ request }: { request: Request }) =>
     endpoint: "/api/trpc",
     req: request,
     router: appRouter,
-    createContext,
+    createContext: createContext,
   })
 
 export type AppRouter = typeof appRouter

@@ -17,4 +17,4 @@ export const router = t.router
 // the default procedure, no authorization required to use
 export const publicProcedure = t.procedure
 
-export { requestHandler, type AppRouter } from "./routers"
+export { requestHandler, type AppRouter } from "./router"

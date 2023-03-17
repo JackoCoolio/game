@@ -8,12 +8,12 @@ them anywhere.
 
 // handle GET requests
 export const loader = async (args: DataFunctionArgs) => {
-  const { requestHandler } = await import("~/lib/trpc/router")
+  const { requestHandler } = await import("~/lib/server/router")
   return requestHandler(args)
 }
 
 // handle non-GET requests
 export const action = async (args: DataFunctionArgs) => {
-  const { requestHandler } = await import("~/lib/trpc/router")
+  const { requestHandler } = await import("~/lib/server/router")
   return requestHandler(args)
 }

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Counter } from "~/components/Counter"
-import { trpc } from "~/lib/trpc"
+import { trpc } from "~/lib/client/trpc"
 
 export default function Index() {
   const [username, setUsername] = useState("")
