@@ -1,4 +1,4 @@
-import { TRPCClientError } from "@trpc/client"
+import type { TRPCClientError } from "@trpc/client"
 import type { AnyProcedure, AnyRouter } from "@trpc/server"
 
 /*
@@ -9,16 +9,16 @@ fun. :)
 
 type CodesMap = {
   CONFLICT: 409
-  INTERNAL_SERVER_ERROR: 500,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  METHOD_NOT_SUPPORTED: 405,
-  TIMEOUT: 408,
-  PRECONDITION_FAILED: 412,
-  PAYLOAD_TOO_LARGE: 413,
-  TOO_MANY_REQUESTS: 429,
-  CLIENT_CLOSED_REQUEST: 499,
+  INTERNAL_SERVER_ERROR: 500
+  UNAUTHORIZED: 401
+  FORBIDDEN: 403
+  NOT_FOUND: 404
+  METHOD_NOT_SUPPORTED: 405
+  TIMEOUT: 408
+  PRECONDITION_FAILED: 412
+  PAYLOAD_TOO_LARGE: 413
+  TOO_MANY_REQUESTS: 429
+  CLIENT_CLOSED_REQUEST: 499
 }
 
 // https://stackoverflow.com/a/59059901/2499020
@@ -43,7 +43,10 @@ type KnownTRPCClientError<
 > = ChangeFields<
   TRPCClientError<TRouterOrProcedure>,
   {
-    data: Omit<TRPCClientError<TRouterOrProcedure>["data"], "code" | "httpStatus">
+    data: Omit<
+      TRPCClientError<TRouterOrProcedure>["data"],
+      "code" | "httpStatus"
+    >
   }
 > & {
   data: Data

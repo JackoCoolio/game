@@ -1,4 +1,4 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime"
+import type { PrismaClientKnownRequestError } from "@prisma/client/runtime"
 
 /**
  * Error codes that Prisma can return.

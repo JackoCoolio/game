@@ -1,4 +1,4 @@
-import { DataFunctionArgs } from "@remix-run/node"
+import type { DataFunctionArgs } from "@remix-run/node"
 
 /*
 Remix makes a distinction between GET and non-GET requests, so we have two
