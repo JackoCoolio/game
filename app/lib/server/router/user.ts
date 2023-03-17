@@ -1,8 +1,8 @@
 import { z } from "zod"
-import { generateSalt, hashPassword } from "~/lib/crypto"
+import { generateSalt, hashPassword } from "~/lib/server/crypto"
 import { publicProcedure, router } from "~/lib/server/trpc"
 import { TRPCError } from "@trpc/server"
-import { isUniqueConstraintFailedError } from "~/lib/prisma"
+import { isUniqueConstraintFailedError } from "~/lib/server/prisma"
 
 export const userRouter = router({
   /**
