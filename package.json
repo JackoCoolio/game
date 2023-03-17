@@ -9,7 +9,8 @@
     "prisma-gen": "prisma generate",
     "prisma-push": "prisma db push",
     "prettier": "prettier -w app/ ./remix.config.js ./remix.env.d.ts",
-    "lint": "eslint app/"
+    "lint": "eslint app/",
+    "precommit": "yarn prettier && yarn lint"
   },
   "dependencies": {
     "@remix-run/node": "^1.14.0",
