@@ -1,7 +1,8 @@
 import { z } from "zod"
 import { generateSalt, hashPassword } from "~/lib/crypto"
-import { err, ok, Result } from "~/lib/common/result"
 import { publicProcedure, router } from "~/lib/server/trpc"
+import { TRPCError } from "@trpc/server"
+import { isUniqueConstraintFailedError } from "~/lib/prisma"
 
 export const userRouter = router({
   /**
@@ -14,7 +15,7 @@ export const userRouter = router({
         password: z.string(),
       }),
     )
-    .mutation(async ({ input, ctx }): Promise<Result<number, string>> => {
+    .mutation(async ({ input, ctx }): Promise<number> => {
       // generate salt and password
       const salt = generateSalt()
       const hashed = await hashPassword(input.password, salt)
@@ -40,9 +41,20 @@ export const userRouter = router({
           },
         })
 
-        return ok(user.id)
+        return user.id
       } catch (e) {
-        return err("Something went wrong while creating the user.")
+        // catch error if it's a known error
+        if (isUniqueConstraintFailedError(e)) {
+          throw new TRPCError({
+            code: "CONFLICT", // would prefer 422 here
+            message: "User already exists.",
+          })
+        }
+
+        console.error({ me: "unrecognized error", e })
+
+        // just throw it again if not
+        throw e
       }
     }),
   login: publicProcedure
@@ -52,34 +64,43 @@ export const userRouter = router({
         password: z.string(),
       }),
     )
-    .mutation(async ({ input, ctx }): Promise<Result<null, string>> => {
+    .mutation(async ({ input, ctx }): Promise<number> => {
       const { username, password } = input
 
-      const resp = await ctx.prisma.user.findUnique({
+      const user = await ctx.prisma.user.findUnique({
+        // select user with given username
         where: {
           username,
         },
+        // retrieve auth info and user id
         select: {
           auth: {
             select: {
               hashed: true,
               salt: true,
-            }
-          }
-        }
+            },
+          },
+          id: true,
+        },
       })
 
-      if (!resp || !resp.auth) {
-        return err("No user with given username.")
+      if (!user || !user.auth) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "No user with given username.",
+        })
       }
 
-      const { hashed, salt } = resp.auth
+      const { hashed, salt } = user.auth
 
       const myHashed = await hashPassword(password, salt)
       if (myHashed !== hashed) {
-        return err("Incorrect password.")
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Incorrect password.",
+        })
       }
 
-      return ok(null)
-    })
+      return user.id
+    }),
 })
