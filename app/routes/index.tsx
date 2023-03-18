@@ -1,15 +1,33 @@
+import { json, type LoaderArgs } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
 import { TRPCError } from "@trpc/server"
 import { useState } from "react"
 import { Counter } from "~/components/Counter"
 import { isTRPCErrorWithCode } from "~/lib/client/error"
+import type { LoaderResp } from "~/lib/client/loader"
 import { trpc } from "~/lib/client/trpc"
+import { getSession } from "~/lib/server/session"
+
+type LoaderData = {
+  userId?: number
+}
+
+export async function loader({ request }: LoaderArgs): LoaderResp<LoaderData> {
+  const session = await getSession(request)
+  const userId = session.get("userId")
+
+  return json({ userId })
+}
 
 export default function Index() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
+  const { userId } = useLoaderData<LoaderData>()
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
+      <span>{userId ? "User ID: " + userId : "Not logged in"}</span>
       <h1>Welcome to the game</h1>
       <p>There isn't much here yet...</p>
       <Counter />

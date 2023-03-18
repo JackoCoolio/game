@@ -3,6 +3,7 @@ import { generateSalt, hashPassword } from "~/lib/server/crypto/password"
 import { publicProcedure, router } from "~/lib/server/trpc"
 import { TRPCError } from "@trpc/server"
 import { isUniqueConstraintFailedError } from "~/lib/server/prisma"
+import { updateSession } from "."
 
 export const userRouter = router({
   /**
@@ -39,6 +40,10 @@ export const userRouter = router({
             // only select the id, we don't want to leak anything else on accident
             id: true,
           },
+        })
+
+        updateSession(ctx, {
+          userId: user.id,
         })
 
         return user.id
@@ -100,6 +105,10 @@ export const userRouter = router({
           message: "Incorrect password.",
         })
       }
+
+      updateSession(ctx, {
+        userId: user.id,
+      })
 
       return user.id
     }),
