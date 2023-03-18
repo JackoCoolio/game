@@ -99,7 +99,9 @@ export const userRouter = router({
       const { hashed, salt } = user.auth
 
       const myHashed = await hashPassword(password, salt)
-      if (myHashed !== hashed) {
+
+      // need to use equals() here, for some reason
+      if (!myHashed.equals(hashed)) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "Incorrect password.",
