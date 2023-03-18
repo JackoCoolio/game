@@ -2,13 +2,12 @@ import type { PrismaClientKnownRequestError } from "@prisma/client/runtime"
 
 /**
  * Error codes that Prisma can return.
+ * Only the codes that we're interested in handling gracefully.
  */
 export const ERROR = {
   /** Thrown when a value for a unique key already exists. */
   UNIQUE_CONSTRAINT_FAILED: "P2002",
 } as const
-
-type UniqueConstraintFailedCode = typeof ERROR.UNIQUE_CONSTRAINT_FAILED
 
 type PrismaError<T extends string> = PrismaClientKnownRequestError & {
   code: T
@@ -27,6 +26,6 @@ export function isPrismaErrorWithCode<T extends string>(
 
 export function isUniqueConstraintFailedError(
   e: any,
-): e is PrismaError<UniqueConstraintFailedCode> {
-  return isPrismaErrorWithCode(e, "P2002")
+): e is PrismaError<typeof ERROR.UNIQUE_CONSTRAINT_FAILED> {
+  return isPrismaErrorWithCode(e, ERROR.UNIQUE_CONSTRAINT_FAILED)
 }
