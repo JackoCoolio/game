@@ -6,15 +6,19 @@ import { Counter } from "~/components/Counter"
 import { isTRPCErrorWithCode } from "~/lib/client/error"
 import type { LoaderResp } from "~/lib/client/loader"
 import { trpc } from "~/lib/client/trpc"
-import { getSession } from "~/lib/server/session"
+import { getAuthorization } from "~/lib/server/auth"
 
 type LoaderData = {
   userId?: number
 }
 
 export async function loader({ request }: LoaderArgs): LoaderResp<LoaderData> {
-  const session = await getSession(request)
-  const userId = session.get("userId")
+  const auth = await getAuthorization({
+    req: request,
+    resHeaders: request.headers,
+  })
+
+  const userId = auth?.sub ?? undefined
 
   return json({ userId })
 }

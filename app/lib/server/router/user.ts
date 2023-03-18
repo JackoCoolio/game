@@ -4,6 +4,7 @@ import { publicProcedure, router } from "~/lib/server/trpc"
 import { TRPCError } from "@trpc/server"
 import { isUniqueConstraintFailedError } from "~/lib/server/prisma"
 import { updateSession } from "."
+import { createSessionToken } from "../crypto/jwt"
 
 export const userRouter = router({
   /**
@@ -42,9 +43,8 @@ export const userRouter = router({
           },
         })
 
-        updateSession(ctx, {
-          userId: user.id,
-        })
+        const token = createSessionToken(user.id, 60, "secret")
+        updateSession(ctx, { token })
 
         return user.id
       } catch (e) {
@@ -108,9 +108,8 @@ export const userRouter = router({
         })
       }
 
-      updateSession(ctx, {
-        userId: user.id,
-      })
+      const token = createSessionToken(user.id, 60, "secret")
+      updateSession(ctx, { token })
 
       return user.id
     }),

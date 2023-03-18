@@ -2,7 +2,7 @@ import type { Session } from "@remix-run/node"
 import { createCookieSessionStorage } from "@remix-run/node"
 
 export type SessionData = {
-  userId: number
+  token: string
 }
 
 const {
