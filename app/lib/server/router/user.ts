@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { generateSalt, hashPassword } from "~/lib/server/crypto"
+import { generateSalt, hashPassword } from "~/lib/server/crypto/password"
 import { publicProcedure, router } from "~/lib/server/trpc"
 import { TRPCError } from "@trpc/server"
 import { isUniqueConstraintFailedError } from "~/lib/server/prisma"
